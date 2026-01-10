@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tourist_guide_app/style/extensions.dart';
+import 'package:tourist_guide_app/widget/custom_action_button.dart';
 import 'package:tourist_guide_app/widget/custom_text_field.dart';
 
 import '../../style/text_styles.dart';
@@ -21,15 +23,37 @@ class SignInScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.textFieldTextStyle,
               ),
               const SizedBox(height: 40),
-              CustomTextField(placeholder: "Email",),
+              CustomTextField(placeholder: "Email"),
               const SizedBox(height: 20),
-              CustomTextField(placeholder: "Password",),
-              Text(
-                "Forgot password?",
-                style: Theme.of(context).textTheme.subtitleTextStyle,
+              CustomTextField(placeholder: "Password"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "Forgot password?",
+                    style: context.textLabel,
+                  ),
+                ],
               ),
-              ElevatedButton(onPressed: () {}, child: Text("Sign in")),
-              Text("Don't have an account? Sign up"),
+              const SizedBox(height: 30,),
+              CustomActionButton(),
+              const SizedBox(height: 30,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't have an account?",
+                    style: context.textSubtitle,
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Sign up",
+                      style: context.textSubtitle.copyWith(color: context.colorLink),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
