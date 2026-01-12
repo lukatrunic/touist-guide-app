@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tourist_guide_app/presentation/screen/sign_in_screen.dart';
-import 'package:tourist_guide_app/presentation/style/app_theme.dart';
+import 'package:tourist_guide_app/presentation/core/app_router.dart';
+import 'package:tourist_guide_app/presentation/core/style/app_theme.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: lightTheme,
-      home: const SignInScreen(),
+      initialRoute: AppRouter.splashScreen,
+      onGenerateRoute: AppRouter.generateRoute,
     );
   }
 }
