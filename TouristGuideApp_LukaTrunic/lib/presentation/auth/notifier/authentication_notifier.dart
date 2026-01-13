@@ -7,13 +7,12 @@ import 'package:tourist_guide_app/presentation/auth/notifier/state/authenticatio
 import '../../../domain/model/result.dart';
 import '../../../domain/usecase/user_sign_up_use_case.dart';
 
-
-class AuthenticationNotifier extends Notifier<AuthenticationState>{
+class AuthenticationNotifier extends Notifier<AuthenticationState> {
   late UserSignInUseCase _signInUseCase;
   late UserSignUpUseCase _signUpUseCase;
 
   @override
-  build(){
+  build() {
     _signInUseCase = ref.watch(userSignInUseCaseProvider);
     _signUpUseCase = ref.watch(userSignUpUseCaseProvider);
     return EmptyState();
@@ -27,7 +26,7 @@ class AuthenticationNotifier extends Notifier<AuthenticationState>{
 
     final result = await _signInUseCase(email, password);
 
-    switch(result){
+    switch (result) {
       case Ok<User>():
         state = AuthenticatedState(result.value);
         print("SUCCESS STATE");
@@ -63,5 +62,4 @@ class AuthenticationNotifier extends Notifier<AuthenticationState>{
       state = EmptyState();
     }
   }
-
 }

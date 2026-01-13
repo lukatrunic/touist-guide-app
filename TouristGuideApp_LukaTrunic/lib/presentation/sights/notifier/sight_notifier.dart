@@ -5,7 +5,7 @@ import 'package:tourist_guide_app/domain/model/sight.dart';
 import 'package:tourist_guide_app/domain/usecase/get_all_sights_use_case.dart';
 import 'package:tourist_guide_app/presentation/sights/notifier/state/sight_list_state.dart';
 
-class SightNotifier extends Notifier<SightListState>{
+class SightNotifier extends Notifier<SightListState> {
   late final GetAllSightsUseCase _getAllSightsUseCase;
 
   @override
@@ -22,9 +22,11 @@ class SightNotifier extends Notifier<SightListState>{
 
     final result = await _getAllSightsUseCase();
 
-    switch(result){
+    switch (result) {
       case Ok<List<Sight>>():
-        state = result.value.isEmpty ? EmptyState() : SuccessState(result.value);
+        state = result.value.isEmpty
+            ? EmptyState()
+            : SuccessState(result.value);
       case Error():
         state = ErrorState(result.error.toString());
     }

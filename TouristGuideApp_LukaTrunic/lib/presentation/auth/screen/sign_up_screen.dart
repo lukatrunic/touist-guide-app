@@ -22,15 +22,17 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  final RegExp REG_EXP_EMAIL = RegExp(
+    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+  );
+
   @override
   Widget build(BuildContext context) {
     ref.listen(authenticationNotifierProvider, (previous, state) {
       if (state is AuthenticatedState) {
         Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (_) => const MainNavigationScreen(),
-          ),
-              (route) => false,
+          MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
+          (route) => false,
         );
       }
 
@@ -57,10 +59,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             key: _formKey,
             child: Column(
               children: [
-                Image.asset(
-                  "assets/images/sign_in_image.png",
-                  height: 160,
-                ),
+                Image.asset("assets/images/sign_in_image.png", height: 160),
                 const SizedBox(height: 20),
                 Text(
                   "Please create an account to continue.",
@@ -74,6 +73,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     if (value == null || value.isEmpty) {
                       return "Email is required";
                     }
+
+                    if (!REG_EXP_EMAIL.hasMatch(value)) {
+                      return 'Please enter a valid email';
+                    }
                     return null;
                   },
                 ),
@@ -82,6 +85,15 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   placeholder: "Password",
                   controller: _passwordController,
                   isPasswordType: true,
+                  validator: (value){
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    if (value.length < 8) {
+                      return 'Password must be at least 8 characters long';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 20),
                 CustomTextField(
@@ -102,15 +114,15 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 CustomActionButton(
                   text: "Sign up",
                   isLoading:
-                  ref.watch(authenticationNotifierProvider) is LoadingState,
+                      ref.watch(authenticationNotifierProvider) is LoadingState,
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       ref
                           .read(authenticationNotifierProvider.notifier)
                           .signUp(
-                        _emailController.text,
-                        _passwordController.text,
-                      );
+                            _emailController.text,
+                            _passwordController.text,
+                          );
                     }
                   },
                 ),
@@ -141,5 +153,3 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     );
   }
 }
-
-

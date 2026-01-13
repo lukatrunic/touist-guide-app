@@ -6,7 +6,6 @@ import 'package:tourist_guide_app/presentation/auth/screen/sign_in_screen.dart';
 import 'package:tourist_guide_app/presentation/core/app_router.dart';
 import 'package:tourist_guide_app/presentation/core/style/extensions.dart';
 
-
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
@@ -14,6 +13,7 @@ class ProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageContext = context;
     final user = FirebaseAuth.instance.currentUser;
+    final email = user?.email ?? "";
 
     return Scaffold(
       appBar: AppBar(
@@ -27,7 +27,7 @@ class ProfileScreen extends ConsumerWidget {
             children: [
               const SizedBox(height: 20),
 
-              // 👤 AVATAR
+              // AVATAR
               CircleAvatar(
                 radius: 45,
                 backgroundImage: const AssetImage(
@@ -38,9 +38,10 @@ class ProfileScreen extends ConsumerWidget {
 
               const SizedBox(height: 16),
 
-              // 👤 NAME
+              // NAME
               Text(
-                user?.displayName ?? "Helena Weasley",
+                user?.displayName ??
+                    (email.isNotEmpty ? nameFromEmail(email) : "User"),
                 style: context.textSubtitle.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
@@ -48,15 +49,12 @@ class ProfileScreen extends ConsumerWidget {
 
               const SizedBox(height: 4),
 
-              // 📧 EMAIL
-              Text(
-                user?.email ?? "helena.weasley@gmail.com",
-                style: context.textLabel,
-              ),
+              // EMAIL
+              Text(user?.email ?? "no email", style: context.textLabel),
 
               const Spacer(),
 
-              // 🚫 DEACTIVATE (UI ONLY)
+              // DEACTIVATE
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
@@ -65,9 +63,7 @@ class ProfileScreen extends ConsumerWidget {
                   },
                   style: OutlinedButton.styleFrom(
                     foregroundColor: context.colorGradientEnd,
-                    side: BorderSide(
-                      color: context.colorGradientEnd,
-                    ),
+                    side: BorderSide(color: context.colorGradientEnd),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -79,18 +75,20 @@ class ProfileScreen extends ConsumerWidget {
 
               const SizedBox(height: 12),
 
-              // 🔓 SIGN OUT
+              // SIGN OUT
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () async {
-                    await ref.read(authenticationNotifierProvider.notifier).signOut();
+                    await ref
+                        .read(authenticationNotifierProvider.notifier)
+                        .signOut();
 
                     if (!context.mounted) return;
 
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (_) => const SignInScreen()),
-                          (route) => false, // 🔥 clears whole app stack
+                      (route) => false, // clears whole app stack
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -111,9 +109,9 @@ class ProfileScreen extends ConsumerWidget {
   }
 
   Future<void> _showDeactivateDialog(
-      BuildContext pageContext,
-      WidgetRef ref,
-      ) async {
+    BuildContext pageContext,
+    WidgetRef ref,
+  ) async {
     return showDialog(
       context: pageContext,
       barrierDismissible: false,
@@ -122,19 +120,19 @@ class ProfileScreen extends ConsumerWidget {
           title: const Text("Deactivate account"),
           content: const Text(
             "Are you sure you want to deactivate your account? "
-                "This action cannot be undone.",
+            "This action cannot be undone.",
           ),
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(dialogContext).pop(); // ✅ close dialog
+                Navigator.of(dialogContext).pop(); // close
               },
               child: const Text("No"),
             ),
             TextButton(
               onPressed: () async {
-                Navigator.of(dialogContext).pop(); // ✅ close dialog
-                await _deactivateAccount(pageContext, ref); // 🔥 USE PAGE CONTEXT
+                Navigator.of(dialogContext).pop(); // close
+                await _deactivateAccount(pageContext, ref);
               },
               style: TextButton.styleFrom(foregroundColor: Colors.red),
               child: const Text("Yes, deactivate"),
@@ -145,27 +143,22 @@ class ProfileScreen extends ConsumerWidget {
     );
   }
 
-
-  Future<void> _deactivateAccount(
-      BuildContext context,
-      WidgetRef ref,
-      ) async {
+  Future<void> _deactivateAccount(BuildContext context, WidgetRef ref) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
     try {
-      await user.delete();                     // 🗑 delete Firebase user
-      await FirebaseAuth.instance.signOut();   // 🔓 sign out
+      await user.delete(); // delete Firebase user
+      await FirebaseAuth.instance.signOut(); // sign out
 
       ref.read(authenticationNotifierProvider.notifier).signOut();
 
       if (!context.mounted) return;
 
-      Navigator.of(context, rootNavigator: true)
-          .pushNamedAndRemoveUntil(
-        AppRouter.signInScreen,
-            (route) => false,
-      );
+      Navigator.of(
+        context,
+        rootNavigator: true,
+      ).pushNamedAndRemoveUntil(AppRouter.signInScreen, (route) => false);
     } on FirebaseAuthException catch (e) {
       if (!context.mounted) return;
 
@@ -181,6 +174,15 @@ class ProfileScreen extends ConsumerWidget {
     }
   }
 
+  String nameFromEmail(String email) {
+    final localPart = email.split('@').first;
 
+    final parts = localPart
+        .replaceAll(RegExp(r'[._\-]'), ' ')
+        .split(' ')
+        .where((p) => p.isNotEmpty)
+        .toList();
 
+    return parts.map((p) => p[0].toUpperCase() + p.substring(1)).join(' ');
+  }
 }

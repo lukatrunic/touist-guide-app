@@ -13,7 +13,6 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -25,18 +24,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<AuthenticationState>(
-      authenticationNotifierProvider,
-          (_, state) {
-        if (state is AuthenticatedState) {
-          Navigator.of(context)
-              .pushReplacementNamed(AppRouter.homeScreen);
-        } else if (state is EmptyState) {
-          Navigator.of(context)
-              .pushReplacementNamed(AppRouter.signInScreen);
-        }
-      },
-    );
+    ref.listen<AuthenticationState>(authenticationNotifierProvider, (_, state) {
+      if (state is AuthenticatedState) {
+        Navigator.of(context).pushReplacementNamed(AppRouter.homeScreen);
+      } else if (state is EmptyState) {
+        Navigator.of(context).pushReplacementNamed(AppRouter.signInScreen);
+      }
+    });
 
     return Scaffold(
       body: SafeArea(
@@ -46,10 +40,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset('assets/images/camping_image.png'),
-              Lottie.asset(
-                'assets/animations/loading_dots.json',
-                width: 120,
-              ),
+              Lottie.asset('assets/animations/loading_dots.json', width: 120),
             ],
           ),
         ),
@@ -57,4 +48,3 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     );
   }
 }
-

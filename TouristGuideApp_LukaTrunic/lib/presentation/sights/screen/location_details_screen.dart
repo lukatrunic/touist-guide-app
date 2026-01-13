@@ -12,10 +12,7 @@ import '../notifier/favorites_notifier.dart';
 class LocationDetailsScreen extends ConsumerWidget {
   final Sight sight;
 
-  const LocationDetailsScreen({
-    super.key,
-    required this.sight,
-  });
+  const LocationDetailsScreen({super.key, required this.sight});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,7 +38,7 @@ class LocationDetailsScreen extends ConsumerWidget {
                 child: _circleIcon(
                   context,
                   Icons.arrow_back,
-                      () => Navigator.pop(context),
+                  () => Navigator.pop(context),
                   backgroundColor: Colors.white,
                   iconColor: context.colorGradientEnd,
                 ),
@@ -49,7 +46,7 @@ class LocationDetailsScreen extends ConsumerWidget {
             ),
           ),
 
-          // 📄 DRAGGABLE CONTENT
+          // DRAGGABLE
           DraggableScrollableSheet(
             initialChildSize: 0.65,
             minChildSize: 0.65,
@@ -67,22 +64,13 @@ class LocationDetailsScreen extends ConsumerWidget {
                   controller: controller,
                   padding: const EdgeInsets.only(bottom: 120),
                   children: [
-                    Text(
-                      sight.title,
-                      style: context.textTitle,
-                    ),
+                    Text(sight.title, style: context.textTitle),
                     const SizedBox(height: 6),
-                    Text(
-                      sight.address,
-                      style: context.textSubtitle,
-                    ),
+                    Text(sight.address, style: context.textSubtitle),
 
                     const SizedBox(height: 20),
 
-                    Text(
-                      "Rating",
-                      style: context.textSubtitle,
-                    ),
+                    Text("Rating", style: context.textSubtitle),
                     const SizedBox(height: 6),
 
                     _ratingStars(context, sight.rating),
@@ -100,23 +88,22 @@ class LocationDetailsScreen extends ConsumerWidget {
             },
           ),
 
-          // ❤️ FAVORITE BUTTON (FIGMA POSITION)
+          // FAVORITE BUTTON
           Positioned(
             top: 290,
             right: 40,
             child: _circleIcon(
               context,
               isFav ? Icons.favorite : Icons.favorite_border,
-                  () {
+              () {
                 ref.read(favoritesProvider.notifier).toggleFavorite(sight);
               },
               backgroundColor: context.colorGradientEnd,
               iconColor: Colors.white,
             ),
-
           ),
 
-          // 🔘 FIXED BOTTOM BUTTON
+          // SHOW ON MAPS BUTTON
           Positioned(
             left: 20,
             right: 20,
@@ -124,11 +111,7 @@ class LocationDetailsScreen extends ConsumerWidget {
             child: SafeArea(
               child: CustomActionButton(
                 text: "Show on maps",
-                onPressed: () => openInMaps(
-                  sight.lat,
-                  sight.lng,
-                  sight.title,
-                ),
+                onPressed: () => openInMaps(sight.lat, sight.lng, sight.title),
               ),
             ),
           ),
@@ -137,14 +120,14 @@ class LocationDetailsScreen extends ConsumerWidget {
     );
   }
 
-  // 🔘 CIRCLE ICON (FIGMA STYLE)
+  // CIRCLE ICON
   Widget _circleIcon(
-      BuildContext context,
-      IconData icon,
-      VoidCallback onTap, {
-        required Color backgroundColor,
-        required Color iconColor,
-      }) {
+    BuildContext context,
+    IconData icon,
+    VoidCallback onTap, {
+    required Color backgroundColor,
+    required Color iconColor,
+  }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -161,17 +144,12 @@ class LocationDetailsScreen extends ConsumerWidget {
             ),
           ],
         ),
-        child: Icon(
-          icon,
-          color: iconColor,
-          size: 22,
-        ),
+        child: Icon(icon, color: iconColor, size: 22),
       ),
     );
   }
 
-
-  // ⭐ RATING STARS
+  // RATING STARS
   Widget _ratingStars(BuildContext context, int rating) {
     return Row(
       children: List.generate(5, (index) {
@@ -184,12 +162,14 @@ class LocationDetailsScreen extends ConsumerWidget {
     );
   }
 
-  // 🗺️ OPEN IN MAPS
+  // OPEN IN MAPS
   void openInMaps(double latitude, double longitude, String label) async {
     try {
       final Uri url = Platform.isIOS
           ? Uri.parse('maps:$latitude,$longitude?q=$latitude,$longitude')
-          : Uri.parse('geo:$latitude,$longitude?q=$latitude,$longitude($label)');
+          : Uri.parse(
+              'geo:$latitude,$longitude?q=$latitude,$longitude($label)',
+            );
 
       await launchUrl(url);
     } catch (e) {

@@ -20,7 +20,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   final _passwordController = TextEditingController();
   final _formkey = GlobalKey<FormState>();
 
-  final RegExp REG_EXP_EMAIL = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  final RegExp REG_EXP_EMAIL = RegExp(
+    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -75,11 +77,13 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                   text: "Sign in",
                   isLoading: state is LoadingState,
                   onPressed: () {
-                    if(_formkey.currentState!.validate()) {
-                      ref.read(authenticationNotifierProvider.notifier).signIn(
-                        _emailController.text,
-                        _passwordController.text,
-                      );
+                    if (_formkey.currentState!.validate()) {
+                      ref
+                          .read(authenticationNotifierProvider.notifier)
+                          .signIn(
+                            _emailController.text,
+                            _passwordController.text,
+                          );
                     }
                   },
                 ),
@@ -109,24 +113,24 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     );
   }
 
-  String? isEmailValid(String? value){
-    if (value == null || value.isEmpty){
+  String? isEmailValid(String? value) {
+    if (value == null || value.isEmpty) {
       return 'Please enter your email';
     }
 
-    if (!REG_EXP_EMAIL.hasMatch(value)){
+    if (!REG_EXP_EMAIL.hasMatch(value)) {
       return 'Please enter a valid email';
     }
 
     return null;
   }
 
-  String? isPasswordValid(String? value){
-    if (value == null || value.isEmpty){
+  String? isPasswordValid(String? value) {
+    if (value == null || value.isEmpty) {
       return 'Please enter your password';
     }
 
-    if(value.length < 8){
+    if (value.length < 8) {
       return 'Password must be at least 8 characters long';
     }
 

@@ -35,11 +35,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderSide: const BorderSide(color: Colors.red),
         ),
         suffixIcon: widget.isPasswordType
-          ? IconButton(
-            icon: isPasswordVisible ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
-            onPressed: () => setState(() => isPasswordVisible = !isPasswordVisible)
-        )
-        : null,
+            ? IconButton(
+                icon: isPasswordVisible
+                    ? const Icon(Icons.visibility)
+                    : const Icon(Icons.visibility_off),
+                onPressed: () =>
+                    setState(() => isPasswordVisible = !isPasswordVisible),
+              )
+            : null,
       ),
     );
   }

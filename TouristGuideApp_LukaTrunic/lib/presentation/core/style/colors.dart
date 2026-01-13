@@ -33,6 +33,7 @@ class AppColors extends ThemeExtension<AppColors> {
     required this.cardText,
     required this.link,
   });
+
   @override
   AppColors copyWith({
     final Color? text,
@@ -43,19 +44,22 @@ class AppColors extends ThemeExtension<AppColors> {
     final Color? gradientEnd,
     final Color? cardText,
     final Color? link,
-  }) =>
-      AppColors(
-        text: text ?? this.text,
-        background: background ?? this.background,
-        border: border ?? this.border,
-        error: error ?? this.error,
-        gradientBegin: gradientBegin ?? this.gradientBegin,
-        gradientEnd: gradientEnd ?? this.gradientEnd,
-        cardText: cardText ?? this.cardText,
-        link: link ?? this.link,
-      );
+  }) => AppColors(
+    text: text ?? this.text,
+    background: background ?? this.background,
+    border: border ?? this.border,
+    error: error ?? this.error,
+    gradientBegin: gradientBegin ?? this.gradientBegin,
+    gradientEnd: gradientEnd ?? this.gradientEnd,
+    cardText: cardText ?? this.cardText,
+    link: link ?? this.link,
+  );
+
   @override
-  ThemeExtension<AppColors> lerp(covariant ThemeExtension<AppColors>? other, double t) {
+  ThemeExtension<AppColors> lerp(
+    covariant ThemeExtension<AppColors>? other,
+    double t,
+  ) {
     if (other is! AppColors) {
       return this;
     }

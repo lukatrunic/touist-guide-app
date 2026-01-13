@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tourist_guide_app/presentation/core/app_router.dart';
 import 'package:tourist_guide_app/presentation/core/style/app_theme.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const ProviderScope(child: MyApp()));
@@ -24,4 +24,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

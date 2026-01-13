@@ -7,8 +7,6 @@ import 'package:tourist_guide_app/presentation/sights/notifier/state/sight_list_
 import 'package:tourist_guide_app/presentation/sights/screen/location_details_screen.dart';
 import 'package:tourist_guide_app/presentation/sights/widget/place_card.dart';
 
-import '../../core/app_router.dart';
-
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
@@ -17,9 +15,7 @@ class HomeScreen extends ConsumerWidget {
     final state = ref.watch(sightNotifierProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Places", style: context.textTitle),
-      ),
+      appBar: AppBar(title: Text("Places", style: context.textTitle)),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -27,7 +23,7 @@ class HomeScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               switch (state) {
-              // 🔄 LOADING
+                // LOADING
                 LoadingState() => Expanded(
                   child: Center(
                     child: Lottie.asset(
@@ -37,7 +33,7 @@ class HomeScreen extends ConsumerWidget {
                   ),
                 ),
 
-              // ✅ SUCCESS
+                // SUCCESS
                 SuccessState(sights: final listOfSights) => Expanded(
                   child: ListView.separated(
                     itemCount: listOfSights.length,
@@ -49,22 +45,18 @@ class HomeScreen extends ConsumerWidget {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (_) => LocationDetailsScreen(
-                                sight: sight,
-                              ),
+                              builder: (_) =>
+                                  LocationDetailsScreen(sight: sight),
                             ),
                           );
                         },
-                        child: PlaceCard(
-                          sight: sight,
-                        ),
+                        child: PlaceCard(sight: sight),
                       );
                     },
-
                   ),
                 ),
 
-              // 📭 EMPTY
+                // EMPTY
                 EmptyState() => Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -74,33 +66,39 @@ class HomeScreen extends ConsumerWidget {
                         height: 220,
                       ),
                       const SizedBox(height: 20),
+                      Text("No places found.", style: context.textSubtitle),
+
+                      const SizedBox(height: 8),
+
                       Text(
-                        "No places found.",
-                        style: context.textSubtitle,
+                        "Try to refresh the screen or check later.",
+                        textAlign: TextAlign.center,
+                        style: context.textBelow,
                       ),
                     ],
                   ),
                 ),
 
-              // ❌ ERROR
+                // ERROR
                 ErrorState(message: final errorMessage) => Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        'assets/images/error_image.png',
-                        height: 220,
-                      ),
+                      Image.asset('assets/images/error_image.png', height: 220),
                       const SizedBox(height: 20),
+                      Text("There was an error.", style: context.textSubtitle),
+
+                      const SizedBox(height: 8),
+
                       Text(
-                        "There was an error.",
-                        style: context.textSubtitle,
+                        "Please try again later or check your internet connection.",
+                        textAlign: TextAlign.center,
+                        style: context.textBelow,
                       ),
                     ],
                   ),
                 ),
-              }
-
+              },
             ],
           ),
         ),
@@ -108,4 +106,3 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 }
-

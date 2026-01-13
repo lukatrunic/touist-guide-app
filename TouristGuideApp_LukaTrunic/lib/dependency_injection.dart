@@ -40,11 +40,11 @@ final userSignInUseCaseProvider = Provider<UserSignInUseCase>(
 );
 
 final userSignUpUseCaseProvider = Provider<UserSignUpUseCase>(
-        (ref) => UserSignUpUseCase(ref.watch(userRepositoryProvider)),
+  (ref) => UserSignUpUseCase(ref.watch(userRepositoryProvider)),
 );
 
 final getAllSightsUseCaseProvider = Provider<GetAllSightsUseCase>(
-    (ref) => GetAllSightsUseCase(ref.watch(sightRepositoryProvider))
+  (ref) => GetAllSightsUseCase(ref.watch(sightRepositoryProvider)),
 );
 
 // Notifier
@@ -54,5 +54,5 @@ final authenticationNotifierProvider =
     );
 
 final sightNotifierProvider = NotifierProvider<SightNotifier, SightListState>(
-    () => SightNotifier(),
+  () => SightNotifier(),
 );

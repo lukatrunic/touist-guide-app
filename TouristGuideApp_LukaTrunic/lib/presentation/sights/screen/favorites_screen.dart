@@ -17,34 +17,43 @@ class FavoritesScreen extends ConsumerWidget {
     final sightsState = ref.watch(sightNotifierProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Favorites", style: context.textTitle),
-      ),
+      appBar: AppBar(title: Text("Favorites", style: context.textTitle)),
       body: _buildBody(context, ref, favoriteIds, sightsState),
     );
   }
 
   Widget _buildBody(
-      BuildContext context,
-      WidgetRef ref,
-      Set<int> favoriteIds,
-      SightListState sightsState,
-      ) {
+    BuildContext context,
+    WidgetRef ref,
+    Set<int> favoriteIds,
+    SightListState sightsState,
+  ) {
     if (favoriteIds.isEmpty) {
       return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/empty_favorites.png',
-              height: 220,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              "There are no favorites yet...",
-              style: context.textSubtitle,
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset('assets/images/empty_favorites.png', height: 220),
+              const SizedBox(height: 24),
+
+              Text(
+                "There are no favorites yet...",
+                style: context.textSubtitle,
+                textAlign: TextAlign.center,
+              ),
+
+              const SizedBox(height: 8),
+
+              Text(
+                "Here you will see all your favorite sights. Mark them as favorite by pressing the heart icon.",
+                textAlign: TextAlign.center,
+                style: context.textBelow,
+              ),
+            ],
+          ),
         ),
       );
     }
@@ -61,10 +70,7 @@ class FavoritesScreen extends ConsumerWidget {
       padding: const EdgeInsets.all(20),
       itemCount: favorites.length,
       separatorBuilder: (_, __) => const SizedBox(height: 15),
-      itemBuilder: (_, index) => PlaceCard(
-        sight: favorites[index],
-      ),
+      itemBuilder: (_, index) => PlaceCard(sight: favorites[index]),
     );
   }
 }
-

@@ -30,6 +30,14 @@ dev_dependencies:
   retrofit_generator: ^10.0.1
   build_runner: ^2.6.0
   json_serializable: ^6.10.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  ios: false
+  image_path: "assets/images/app_icon.png"
+  adaptive_icon_background: "#D17438"
+  adaptive_icon_foreground: "assets/images/app_icon.png"
 
 flutter:
 

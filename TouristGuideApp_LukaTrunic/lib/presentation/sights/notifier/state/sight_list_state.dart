@@ -1,12 +1,8 @@
 import 'package:tourist_guide_app/domain/model/sight.dart';
 
-sealed class SightListState {
+sealed class SightListState {}
 
-}
-
-class LoadingState extends SightListState {
-
-}
+class LoadingState extends SightListState {}
 
 class SuccessState extends SightListState {
   final List<Sight> sights;
@@ -14,11 +10,9 @@ class SuccessState extends SightListState {
   SuccessState(this.sights);
 }
 
-class EmptyState extends SightListState{
+class EmptyState extends SightListState {}
 
-}
-
-class ErrorState extends SightListState{
+class ErrorState extends SightListState {
   final String message;
 
   ErrorState(this.message);
