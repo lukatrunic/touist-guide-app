@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tourist_guide_app/presentation/auth/screen/sign_in_screen.dart';
 import 'package:tourist_guide_app/presentation/auth/widget/custom_text_field.dart';
-import 'package:tourist_guide_app/presentation/core/app_router.dart';
+import 'package:tourist_guide_app/presentation/sights/screen/main_navigation_screen.dart';
 import '../../../dependency_injection.dart';
 import '../../core/style/extensions.dart';
 import '../../core/style/text_styles.dart';
@@ -24,10 +24,14 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(authenticationNotifierProvider, (_, state) {
+    ref.listen(authenticationNotifierProvider, (previous, state) {
       if (state is AuthenticatedState) {
-        Navigator.of(context)
-            .pushReplacementNamed(AppRouter.homeScreen);
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (_) => const MainNavigationScreen(),
+          ),
+              (route) => false,
+        );
       }
 
       if (state is ErrorState) {
@@ -57,16 +61,12 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   "assets/images/sign_in_image.png",
                   height: 160,
                 ),
-
                 const SizedBox(height: 20),
-
                 Text(
                   "Please create an account to continue.",
                   style: Theme.of(context).textTheme.textFieldTextStyle,
                 ),
-
                 const SizedBox(height: 40),
-
                 CustomTextField(
                   placeholder: "Email",
                   controller: _emailController,
@@ -77,18 +77,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     return null;
                   },
                 ),
-
-
                 const SizedBox(height: 20),
-
                 CustomTextField(
                   placeholder: "Password",
                   controller: _passwordController,
                   isPasswordType: true,
                 ),
-
                 const SizedBox(height: 20),
-
                 CustomTextField(
                   placeholder: "Confirm password",
                   controller: _confirmPasswordController,
@@ -103,26 +98,23 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     return null;
                   },
                 ),
-
                 const SizedBox(height: 30),
-
                 CustomActionButton(
                   text: "Sign up",
-                  isLoading: ref.watch(authenticationNotifierProvider) is LoadingState,
+                  isLoading:
+                  ref.watch(authenticationNotifierProvider) is LoadingState,
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      ref.read(authenticationNotifierProvider.notifier).signUp(
+                      ref
+                          .read(authenticationNotifierProvider.notifier)
+                          .signUp(
                         _emailController.text,
                         _passwordController.text,
                       );
                     }
                   },
                 ),
-
-
-
                 const SizedBox(height: 30),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -131,9 +123,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       style: context.textSubtitle,
                     ),
                     TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+                      onPressed: () => Navigator.pop(context),
                       child: Text(
                         "Sign in",
                         style: context.textSubtitle.copyWith(
@@ -151,3 +141,5 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     );
   }
 }
+
+

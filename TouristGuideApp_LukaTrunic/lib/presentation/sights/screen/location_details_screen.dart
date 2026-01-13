@@ -7,7 +7,7 @@ import 'package:tourist_guide_app/presentation/core/style/extensions.dart';
 import 'package:tourist_guide_app/presentation/core/widget/custom_action_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../notifier/state/favorites_notifier.dart';
+import '../notifier/favorites_notifier.dart';
 
 class LocationDetailsScreen extends ConsumerWidget {
   final Sight sight;

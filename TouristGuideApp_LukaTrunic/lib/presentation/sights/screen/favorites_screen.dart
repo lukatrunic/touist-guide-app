@@ -5,7 +5,7 @@ import 'package:tourist_guide_app/presentation/sights/widget/place_card.dart';
 
 import '../../../dependency_injection.dart';
 import '../../core/style/extensions.dart';
-import '../notifier/state/favorites_notifier.dart';
+import '../notifier/favorites_notifier.dart';
 import '../notifier/state/sight_list_state.dart';
 
 class FavoritesScreen extends ConsumerWidget {

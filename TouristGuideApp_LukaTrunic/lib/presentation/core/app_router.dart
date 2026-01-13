@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tourist_guide_app/presentation/auth/screen/sign_in_screen.dart';
 import 'package:tourist_guide_app/presentation/auth/screen/splash_screen.dart';
-import 'package:tourist_guide_app/presentation/sights/screen/home_screen.dart';
 import 'package:tourist_guide_app/presentation/sights/screen/main_navigation_screen.dart';
 
 import '../auth/screen/sign_up_screen.dart';
