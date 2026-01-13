@@ -5,8 +5,14 @@ import '../style/extensions.dart';
 class CustomActionButton extends StatelessWidget {
   final bool isLoading;
   final VoidCallback onPressed;
+  final String text;
 
-  const CustomActionButton({super.key, required this.onPressed, this.isLoading = false});
+  const CustomActionButton({
+    super.key,
+    required this.onPressed,
+    required this.text,
+    this.isLoading = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +21,7 @@ class CustomActionButton extends StatelessWidget {
       height: 55,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-            colors: [context.colorGradientBegin, context.colorGradientEnd],
+          colors: [context.colorGradientBegin, context.colorGradientEnd],
         ),
         borderRadius: BorderRadius.circular(20),
       ),
@@ -27,10 +33,7 @@ class CustomActionButton extends StatelessWidget {
         onPressed: onPressed,
         child: isLoading
             ? const CircularProgressIndicator(color: Colors.white)
-            : Text(
-            "Sign in",
-            style: context.textButton,
-        ),
+            : Text(text, style: context.textButton),
       ),
     );
   }

@@ -18,6 +18,8 @@ class SightNotifier extends Notifier<SightListState>{
   void getAllSights() async {
     state = LoadingState();
 
+    await Future.delayed(const Duration(seconds: 2));
+
     final result = await _getAllSightsUseCase();
 
     switch(result){

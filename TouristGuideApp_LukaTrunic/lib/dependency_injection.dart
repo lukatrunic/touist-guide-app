@@ -13,6 +13,8 @@ import 'package:tourist_guide_app/presentation/auth/notifier/state/authenticatio
 import 'package:tourist_guide_app/presentation/sights/notifier/sight_notifier.dart';
 import 'package:tourist_guide_app/presentation/sights/notifier/state/sight_list_state.dart';
 
+import 'domain/usecase/user_sign_up_use_case.dart';
+
 // Client
 final firebaseAuthClientProvider = Provider<FirebaseAuthClient>(
   (_) => FirebaseAuthClient(),
@@ -35,6 +37,10 @@ final sightRepositoryProvider = Provider<SightRepository>(
 // Use Case
 final userSignInUseCaseProvider = Provider<UserSignInUseCase>(
   (ref) => UserSignInUseCase(ref.watch(userRepositoryProvider)),
+);
+
+final userSignUpUseCaseProvider = Provider<UserSignUpUseCase>(
+        (ref) => UserSignUpUseCase(ref.watch(userRepositoryProvider)),
 );
 
 final getAllSightsUseCaseProvider = Provider<GetAllSightsUseCase>(

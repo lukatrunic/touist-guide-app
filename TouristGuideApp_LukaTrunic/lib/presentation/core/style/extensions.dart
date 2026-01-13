@@ -18,4 +18,5 @@ extension StyleExtention on BuildContext {
   TextStyle get textSubtitle => Theme.of(this).textTheme.subtitleTextStyle;
   TextStyle get textButton => Theme.of(this).textTheme.buttonTextStyle.copyWith(color: Colors.white);
   TextStyle get textLabel => Theme.of(this).textTheme.labelTextStyle;
+  TextStyle get textTitle => Theme.of(this).textTheme.titleTextStyle;
 }

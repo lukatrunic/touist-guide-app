@@ -72,6 +72,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                 ),
                 const SizedBox(height: 30),
                 CustomActionButton(
+                  text: "Sign in",
                   isLoading: state is LoadingState,
                   onPressed: () {
                     if(_formkey.currentState!.validate()) {
@@ -88,7 +89,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                   children: [
                     Text("Don't have an account?", style: context.textSubtitle),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(AppRouter.signUpScreen);
+                      },
                       child: Text(
                         "Sign up",
                         style: context.textSubtitle.copyWith(

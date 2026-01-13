@@ -26,7 +26,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return TextFormField(
       controller: widget.controller,
       validator: widget.validator,
-      obscureText: isPasswordVisible,
+      obscureText: widget.isPasswordType && !isPasswordVisible,
       decoration: InputDecoration(
         hintText: widget.placeholder,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
