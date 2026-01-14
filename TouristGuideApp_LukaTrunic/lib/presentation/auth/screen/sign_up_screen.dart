@@ -26,6 +26,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
   );
 
+  final RegExp REG_EXP_PASS = RegExp(
+    r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+  );
+
   @override
   Widget build(BuildContext context) {
     ref.listen(authenticationNotifierProvider, (previous, state) {
@@ -89,9 +93,15 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     }
+
                     if (value.length < 8) {
                       return 'Password must be at least 8 characters long';
                     }
+
+                    if (!REG_EXP_PASS.hasMatch(value)) {
+                      return 'Password must contain letters, numbers, and at least one special character';
+                    }
+
                     return null;
                   },
                 ),
@@ -104,9 +114,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     if (value == null || value.isEmpty) {
                       return "Please confirm your password";
                     }
+
                     if (value != _passwordController.text) {
                       return "Passwords do not match";
                     }
+
                     return null;
                   },
                 ),

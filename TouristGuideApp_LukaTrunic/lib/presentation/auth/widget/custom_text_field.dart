@@ -29,6 +29,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       obscureText: widget.isPasswordType && !isPasswordVisible,
       decoration: InputDecoration(
         hintText: widget.placeholder,
+        errorMaxLines: 3,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),

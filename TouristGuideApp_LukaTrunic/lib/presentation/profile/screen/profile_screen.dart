@@ -6,6 +6,9 @@ import 'package:tourist_guide_app/presentation/auth/screen/sign_in_screen.dart';
 import 'package:tourist_guide_app/presentation/core/app_router.dart';
 import 'package:tourist_guide_app/presentation/core/style/extensions.dart';
 
+import '../../core/widget/custom_action_button.dart';
+import '../../sights/notifier/state/sight_list_state.dart';
+
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
@@ -14,6 +17,7 @@ class ProfileScreen extends ConsumerWidget {
     final pageContext = context;
     final user = FirebaseAuth.instance.currentUser;
     final email = user?.email ?? "";
+    final displayName = nameFromEmail(email);
 
     return Scaffold(
       appBar: AppBar(
@@ -40,8 +44,7 @@ class ProfileScreen extends ConsumerWidget {
 
               // NAME
               Text(
-                user?.displayName ??
-                    (email.isNotEmpty ? nameFromEmail(email) : "User"),
+                displayName,
                 style: context.textSubtitle.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
@@ -55,8 +58,8 @@ class ProfileScreen extends ConsumerWidget {
               const Spacer(),
 
               // DEACTIVATE
-              SizedBox(
-                width: double.infinity,
+              Container(
+                width: double.maxFinite,
                 child: OutlinedButton(
                   onPressed: () {
                     _showDeactivateDialog(pageContext, ref);
@@ -76,30 +79,22 @@ class ProfileScreen extends ConsumerWidget {
               const SizedBox(height: 12),
 
               // SIGN OUT
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    await ref
-                        .read(authenticationNotifierProvider.notifier)
-                        .signOut();
+              CustomActionButton(
+                text: "Sign out",
+                isLoading:
+                    ref.watch(authenticationNotifierProvider) is LoadingState,
+                onPressed: () async {
+                  await ref
+                      .read(authenticationNotifierProvider.notifier)
+                      .signOut();
 
-                    if (!context.mounted) return;
+                  if (!context.mounted) return;
 
-                    Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (_) => const SignInScreen()),
-                      (route) => false, // clears whole app stack
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    backgroundColor: context.colorGradientEnd,
-                  ),
-                  child: Text("Sign out", style: context.textButton),
-                ),
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (_) => const SignInScreen()),
+                    (route) => false,
+                  );
+                },
               ),
             ],
           ),

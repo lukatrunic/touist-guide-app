@@ -121,7 +121,7 @@ class PlaceCard extends StatelessWidget {
               right: 12,
               child: Consumer(
                 builder: (context, ref, _) {
-                  final isFav = ref.watch(favoritesProvider).contains(sight.id);
+                  final isFav = ref.watch(favoritesProvider).any((s) => s.id == sight.id);
 
                   return GestureDetector(
                     onTap: () {

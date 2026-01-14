@@ -16,12 +16,12 @@ class LocationDetailsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isFav = ref.watch(favoritesProvider).contains(sight.id);
+    final isFav = ref.watch(favoritesProvider).any((s) => s.id == sight.id);
 
     return Scaffold(
       body: Stack(
         children: [
-          // 🖼️ TOP IMAGE
+          // TOP IMAGE
           Image.network(
             sight.imageUrl,
             height: 320,
@@ -29,7 +29,7 @@ class LocationDetailsScreen extends ConsumerWidget {
             fit: BoxFit.cover,
           ),
 
-          // 🔙 BACK BUTTON
+          // BACK BUTTON
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -92,16 +92,28 @@ class LocationDetailsScreen extends ConsumerWidget {
           Positioned(
             top: 290,
             right: 40,
-            child: _circleIcon(
-              context,
-              isFav ? Icons.favorite : Icons.favorite_border,
-              () {
-                ref.read(favoritesProvider.notifier).toggleFavorite(sight);
-              },
-              backgroundColor: context.colorGradientEnd,
-              iconColor: Colors.white,
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [
+                    context.colorGradientBegin,
+                    context.colorGradientEnd,
+                  ],
+                ),
+              ),
+              child: _circleIcon(
+                context,
+                isFav ? Icons.favorite : Icons.favorite_border,
+                    () {
+                  ref.read(favoritesProvider.notifier).toggleFavorite(sight);
+                },
+                backgroundColor: Colors.transparent, // 👈 IMPORTANT
+                iconColor: Colors.white,
+              ),
             ),
           ),
+
 
           // SHOW ON MAPS BUTTON
           Positioned(
