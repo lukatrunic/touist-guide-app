@@ -28,7 +28,7 @@ The app is developed as part of the course **Advanced Mobile Programming** at **
 
 Favorite sights are saved locally on the device using SharedPreferences, allowing users to access their favorites even when the device is offline.
 
-## Project Structure
+## 📋 Project Structure
 
 The project follows Clean Architecture principles and is organized into three main layers:
 
