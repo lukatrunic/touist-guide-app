@@ -1,6 +1,5 @@
-import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
 import 'package:tourist_guide_app/domain/model/sight.dart';
 
 final favoritesProvider =
@@ -9,21 +8,25 @@ NotifierProvider<FavoritesNotifier, List<Sight>>(
 );
 
 class FavoritesNotifier extends Notifier<List<Sight>> {
-  static const _storageKey = 'favorite_sights_full';
+  late Box _box;
 
   @override
   List<Sight> build() {
-    _loadFavorites();
+    _init();
     return [];
   }
 
-  Future<void> _loadFavorites() async {
-    final prefs = await SharedPreferences.getInstance();
-    final stored = prefs.getStringList(_storageKey) ?? [];
+  Future<void> _init() async {
+    _box = await Hive.openBox('favorites');
+    _loadFavorites();
+  }
 
-    state = stored
-        .map((json) => Sight.fromJson(jsonDecode(json)))
+  void _loadFavorites() {
+    final favorites = _box.values
+        .map((e) => Sight.fromJson(Map<String, dynamic>.from(e)))
         .toList();
+
+    state = favorites;
   }
 
   bool isFavorite(int sightId) {
@@ -31,20 +34,12 @@ class FavoritesNotifier extends Notifier<List<Sight>> {
   }
 
   Future<void> toggleFavorite(Sight sight) async {
-    final prefs = await SharedPreferences.getInstance();
-    final newState = [...state];
-
-    if (isFavorite(sight.id)) {
-      newState.removeWhere((s) => s.id == sight.id);
+    if (_box.containsKey(sight.id)) {
+      await _box.delete(sight.id);
     } else {
-      newState.add(sight);
+      await _box.put(sight.id, sight.toJson());
     }
 
-    state = newState;
-
-    await prefs.setStringList(
-      _storageKey,
-      newState.map((s) => jsonEncode(s.toJson())).toList(),
-    );
+    _loadFavorites();
   }
 }

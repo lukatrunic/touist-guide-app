@@ -16,21 +16,23 @@ dependencies:
   url_launcher: ^6.3.2
   firebase_core: ^4.2.0
   firebase_auth: ^6.1.1
-  flutter_riverpod: ^2.6.1
-  retrofit: ^4.9.0
+  flutter_riverpod: ^2.5.3
+  retrofit: ^4.5.0
   logger: ^2.6.0
   json_annotation: ^4.9.0
-  dio: ^5.7.0
-  shared_preferences: ^2.3.2
+  dio: ^5.9.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^6.0.0
-  retrofit_generator: ^10.0.1
-  build_runner: ^2.6.0
-  json_serializable: ^6.10.0
+  flutter_lints: ^4.0.0
+  retrofit_generator: ^9.7.0
+  build_runner: ^2.4.13
+  json_serializable: ^6.9.0
   flutter_launcher_icons: ^0.13.1
 
 flutter_icons:

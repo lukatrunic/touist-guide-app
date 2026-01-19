@@ -4,14 +4,14 @@ part 'sight.g.dart';
 
 @JsonSerializable()
 class Sight {
-  int id;
-  String title;
-  String description;
-  String address;
-  double lat;
-  double lng;
-  int rating;
-  String imageUrl;
+  final int id;
+  final String title;
+  final String description;
+  final String address;
+  final double lat;
+  final double lng;
+  final int rating;
+  final String imageUrl;
 
   Sight({
     required this.id,
@@ -24,7 +24,8 @@ class Sight {
     required this.imageUrl,
   });
 
-  factory Sight.fromJson(Map<String, dynamic> json) => _$SightFromJson(json);
+  factory Sight.fromJson(Map<String, dynamic> json) =>
+      _$SightFromJson(json);
 
   Map<String, dynamic> toJson() => _$SightToJson(this);
 }
