@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tourist_guide_app/dependency_injection.dart';
 import 'package:tourist_guide_app/presentation/auth/notifier/state/authentication_state.dart';
-import 'package:tourist_guide_app/presentation/core/app_router.dart';
+import 'package:tourist_guide_app/presentation/core/router/app_router.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});

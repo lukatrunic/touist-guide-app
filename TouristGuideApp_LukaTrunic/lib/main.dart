@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tourist_guide_app/presentation/core/app_router.dart';
+import 'package:tourist_guide_app/presentation/core/router/app_router.dart';
 import 'package:tourist_guide_app/presentation/core/style/app_theme.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 

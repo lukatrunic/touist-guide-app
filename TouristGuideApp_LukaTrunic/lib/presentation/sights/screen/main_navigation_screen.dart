@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tourist_guide_app/presentation/core/widget/main_bottom_nav.dart';
-import 'package:tourist_guide_app/presentation/sights/screen/home_screen.dart';
+import 'package:tourist_guide_app/presentation/sights/screen/sights_home_screen.dart';
 import 'package:tourist_guide_app/presentation/profile/screen/profile_screen.dart';
 
 import 'favorites_screen.dart';

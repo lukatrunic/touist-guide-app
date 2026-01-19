@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tourist_guide_app/domain/model/sight.dart';
-import 'package:tourist_guide_app/presentation/sights/screen/location_details_screen.dart';
+import 'package:tourist_guide_app/presentation/sights/screen/sightsdetails_screen.dart';
 import '../../core/style/extensions.dart';
 import '../notifier/favorites_notifier.dart';
 

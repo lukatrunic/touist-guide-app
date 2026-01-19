@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tourist_guide_app/dependency_injection.dart';
 import 'package:tourist_guide_app/presentation/auth/screen/sign_in_screen.dart';
-import 'package:tourist_guide_app/presentation/core/app_router.dart';
+import 'package:tourist_guide_app/presentation/core/router/app_router.dart';
 import 'package:tourist_guide_app/presentation/core/style/extensions.dart';
 
 import '../../core/widget/custom_action_button.dart';
