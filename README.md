@@ -28,6 +28,26 @@ The app is developed as part of the course **Advanced Mobile Programming** at **
 
 Favorite sights are saved locally on the device using SharedPreferences, allowing users to access their favorites even when the device is offline.
 
+## Project Structure
+
+The project follows Clean Architecture principles and is organized into three main layers:
+
+- **Presentation layer** (`presentation/`)  
+  Contains UI screens, widgets, and state management (Riverpod Notifiers).  
+  Features are grouped by domain (e.g. `auth`, `sights`, `profile`).  
+  The `core` module inside presentation holds shared UI concerns such as routing, theming, and reusable widgets.
+
+- **Domain layer** (`domain/`)  
+  Contains business logic, domain models, repository interfaces, and use cases.  
+  This layer is independent of frameworks and UI.
+
+- **Data layer** (`data/`)  
+  Contains API clients, local data handling, and repository implementations.  
+  This layer is responsible for retrieving and persisting data.
+
+This structure improves separation of concerns, readability, and maintainability.
+
+
 ## 🚀 Getting Started
 
 1. Clone the repository:
